@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from "react";
 const COMPANY_NAME = "AQUAVERN Technologies";
 const BRAND_WORDMARK = "AQUAVERN";
 const CONTACT_EMAIL = "aquaverntechnologies@gmail.com";
+const CONTACT_PHONE = "+91 7619536983";
+const CONTACT_PHONE_HREF = "tel:+917619536983";
+const WEBSITE_URL = "https://aquavern.com";
 const LOGO_SRC = "/aquavern-wordmark.png";
 
 const NAV = [
@@ -51,16 +54,18 @@ const TEAM_GROUPS = [
 
 const SOCIAL_LINKS = [
   {
-    name: "Instagram",
-    icon: "instagram",
-    href: "https://www.instagram.com/aquaverntechnologies?igsh=MXU4NXdxZGhmMGhkdQ==",
-  },
-  {
     name: "LinkedIn",
     icon: "linkedin",
-    href: "https://www.linkedin.com/in/aquavern-technologies-12487140a?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    href: "https://www.linkedin.com/in/aquavern-technologies",
+  },
+  {
+    name: "Facebook",
+    icon: "facebook",
+    href: "https://www.facebook.com/share/1FuHqFsEJk/",
   },
   { name: "X", icon: "x", href: "https://x.com/aquaverntech" },
+  { name: "Website", icon: "website", href: WEBSITE_URL },
+  { name: "Email", icon: "email", href: `mailto:${CONTACT_EMAIL}` },
 ];
 
 export default function Index() {
@@ -444,7 +449,7 @@ function Contact() {
             <div className="relative">
               <div className="text-xs uppercase tracking-widest text-cyan-100/70">Reach us directly</div>
               <h3 className="mt-3 text-[clamp(1.65rem,8vw,2.25rem)] font-semibold leading-tight tracking-tight">
-                Prefer email? We'll map the next step.
+                Prefer email or a call? We'll map the next step.
               </h3>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-300 sm:text-base">
                 Share the type of site, timeline, and whether you want the Basic Plan or a custom build. We'll reply with a clear plan and quote.
@@ -457,10 +462,10 @@ function Contact() {
                   {CONTACT_EMAIL}
                 </div>
               </a>
-              <a href="https://www.instagram.com/aquaverntechnologies?igsh=MXU4NXdxZGhmMGhkdQ==" className="block min-w-0 rounded-2xl border border-white/10 bg-white/[0.045] p-4 transition-all duration-300 hover:border-cyan-200/35 hover:bg-white/[0.075]">
-                <div className="text-xs uppercase tracking-widest text-cyan-100/60">Instagram</div>
+              <a href={CONTACT_PHONE_HREF} className="block min-w-0 rounded-2xl border border-white/10 bg-white/[0.045] p-4 transition-all duration-300 hover:border-cyan-200/35 hover:bg-white/[0.075]">
+                <div className="text-xs uppercase tracking-widest text-cyan-100/60">Business inquiries</div>
                 <div className="mt-1 break-words text-base font-semibold text-cyan-50 underline-offset-4 hover:underline sm:text-lg">
-                  @aquaverntechnologies
+                  {CONTACT_PHONE}
                 </div>
               </a>
             </div>
@@ -590,10 +595,14 @@ function SocialLinks() {
 }
 
 function SocialIcon({ name, icon, href = "#" }) {
+  const isExternal = href.startsWith("http");
+
   return (
     <a
       href={href}
       aria-label={name}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer" : undefined}
       className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-slate-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-300/50 hover:text-cyan-200 hover:shadow-lg hover:shadow-cyan-500/20"
     >
       <Icon type={icon} />
@@ -626,6 +635,25 @@ function Icon({ type }) {
     return (
       <svg viewBox="0 0 24 24" className={common} fill="currentColor" aria-hidden="true">
         <path d="M14.25 8.5V6.9c0-.78.52-.96.89-.96h2.26V2.1L14.29 2.08c-3.45 0-4.23 2.58-4.23 4.23V8.5H7.34v3.95h2.72V22h4.19v-9.55h3.47l.16-1.55.26-2.4h-3.89Z" />
+      </svg>
+    );
+  }
+
+  if (type === "website") {
+    return (
+      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3.6 9h16.8M3.6 15h16.8" />
+        <path d="M12 3c2.3 2.45 3.45 5.45 3.45 9S14.3 18.55 12 21c-2.3-2.45-3.45-5.45-3.45-9S9.7 5.45 12 3Z" />
+      </svg>
+    );
+  }
+
+  if (type === "email") {
+    return (
+      <svg viewBox="0 0 24 24" className={common} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
+        <path d="m4.5 7 7.5 6 7.5-6" />
       </svg>
     );
   }
